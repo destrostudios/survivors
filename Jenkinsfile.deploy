@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+        skipDefaultCheckout()
+        ansiColor('xterm')
+    }
+    parameters {
+        string(name: 'VERSION', defaultValue: 'master')
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+                sh 'git checkout $VERSION'
+            }
+        }
+        stage('Build') {
+            agent {
+                docker {
+                    image 'destrostudios/maven-java-22'
+                    reuseNode true
+                }
+            }
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+        stage('Deploy') {
+            environment {
+                CLIENT = '/var/destrostudios/apps/Survivors'
+            }
+            steps {
+                // Client
+                sh 'rm -rf "$CLIENT"'
+                sh 'mkdir "$CLIENT"'
+                sh 'mv client/target/libs "$CLIENT"'
+                sh 'mv client/target/client-0.0.1.jar "$CLIENT/survivors.jar"'
+                sh 'mv assets "$CLIENT"'
+                sh 'echo -n ./assets/ > "$CLIENT/assets.ini"'
+                sh 'curl -X POST https://destrostudios.com:8080/apps/14/updateFiles'
+            }
+        }
+    }
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
