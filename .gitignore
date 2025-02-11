@@ -66,9 +66,5 @@ nbactions.xml
 lwjgl64.dll
 OpenAL64.dll
 
-# Effekseer specific #
-EffekseerNativeForJava.dll
-hs_err_pid*.log
-
 # Survivors specific
 log.txt
