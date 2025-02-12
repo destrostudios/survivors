@@ -8,6 +8,7 @@ import java.io.File;
 public class AssetPreloader {
 
     public static void preload(AssetManager assetManager) {
+        preloadDirectory(assetManager, "models/");
         preloadDirectory(assetManager, "textures/");
     }
 
@@ -26,6 +27,8 @@ public class AssetPreloader {
     private static void preloadAsset(AssetManager assetManager, String assetPath) {
         if (assetPath.endsWith(".png")) {
             assetManager.loadTexture(assetPath);
+        } else if (assetPath.endsWith(".j3o")) {
+            assetManager.loadModel(assetPath);
         }
     }
 }

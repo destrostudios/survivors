@@ -1,12 +1,10 @@
 package com.destrostudios.survivors.client;
 
+import com.destrostudios.survivors.client.appstates.GameAppState;
 import com.destrostudios.survivors.client.appstates.LoadingAppState;
-import com.destrostudios.survivors.client.appstates.OverlayAppState;
 import com.destrostudios.survivors.client.files.FileAssets;
-import com.destrostudios.survivors.game.Game;
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.plugins.FileLocator;
-import com.jme3.math.ColorRGBA;
 import com.jme3.system.AppSettings;
 import com.simsilica.lemur.GuiGlobals;
 import com.simsilica.lemur.style.BaseStyles;
@@ -49,8 +47,7 @@ public class ClientApplication extends SimpleApplication {
             @Override
             protected void close() {
                 super.close();
-                // TODO: The game
-                stateManager.attach(new OverlayAppState(Game.CONTENT, ColorRGBA.White, false));
+                stateManager.attach(new GameAppState());
             }
         });
     }
