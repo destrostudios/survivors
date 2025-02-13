@@ -2,6 +2,7 @@ package com.destrostudios.survivors.client;
 
 import com.destrostudios.survivors.client.appstates.GameAppState;
 import com.destrostudios.survivors.client.appstates.LoadingAppState;
+import com.destrostudios.survivors.client.appstates.MenuAppState;
 import com.destrostudios.survivors.client.files.FileAssets;
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.plugins.FileLocator;
@@ -47,6 +48,7 @@ public class ClientApplication extends SimpleApplication {
             @Override
             protected void close() {
                 super.close();
+                stateManager.attach(new MenuAppState());
                 stateManager.attach(new GameAppState());
             }
         });
