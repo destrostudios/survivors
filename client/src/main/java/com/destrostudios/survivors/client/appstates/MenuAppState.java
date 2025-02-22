@@ -1,12 +1,15 @@
 package com.destrostudios.survivors.client.appstates;
 
-import com.destrostudios.survivors.game.Game;
 import com.jme3.app.Application;
 import com.jme3.app.DetailedProfilerState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
-import com.simsilica.lemur.*;
+import com.simsilica.lemur.Checkbox;
+import com.simsilica.lemur.Container;
+import com.simsilica.lemur.DefaultRangedValueModel;
+import com.simsilica.lemur.Label;
+import com.simsilica.lemur.Slider;
 import com.simsilica.lemur.component.TbtQuadBackgroundComponent;
 
 public class MenuAppState extends MyBaseAppState {
@@ -26,7 +29,7 @@ public class MenuAppState extends MyBaseAppState {
         TbtQuadBackgroundComponent containerBackground = (TbtQuadBackgroundComponent) container.getBackground();
         containerBackground.setColor(new ColorRGBA(containerBackground.getColor().getRed(), containerBackground.getColor().getGreen(), containerBackground.getColor().getBlue(), 0.95f));
 
-        Label labelContent = new Label(Game.CONTENT);
+        Label labelContent = new Label("Game.CONTENT");
         labelContent.setColor(ColorRGBA.White);
         container.addChild(labelContent);
 

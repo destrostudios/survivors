@@ -1,6 +1,8 @@
 package com.destrostudios.survivors.client.appstates;
 
 import com.destrostudios.survivors.client.MaterialUtil;
+import com.destrostudios.survivors.game.Game;
+import com.destrostudios.survivors.game.Player;
 import com.jme3.anim.AnimComposer;
 import com.jme3.app.Application;
 import com.jme3.app.state.AppStateManager;
@@ -11,7 +13,11 @@ import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Transform;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.*;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.Mesh;
+import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
+import com.jme3.scene.VertexBuffer;
 import com.jme3.util.BufferUtils;
 
 import java.nio.FloatBuffer;
@@ -19,6 +25,9 @@ import java.util.ArrayList;
 
 public class GameAppState extends MyBaseAppState {
 
+    private Game game = new Game(new Player());
+    private float secondsPerTick = 1f / 60;
+    private float tickSeconds = 0;
     private Geometry instancedEnemies;
     private Spatial player;
     private ArrayList<Transform> enemies = new ArrayList<>();
@@ -60,6 +69,13 @@ public class GameAppState extends MyBaseAppState {
     @Override
     public void update(float tpf) {
         super.update(tpf);
+
+        tickSeconds += tpf;
+        if (tickSeconds >= secondsPerTick) {
+            game.tick();
+            tickSeconds -= secondsPerTick;
+        }
+
         MenuAppState menuAppState = getAppState(MenuAppState.class);
 
         int spawnsPerSecond = menuAppState.getSpawnsPerSecond();
